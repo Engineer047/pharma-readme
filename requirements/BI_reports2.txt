@@ -1,0 +1,75 @@
+		Frequency							
+No	Metrics	Daily	Weekly	Monthly	Yearly	Who	Priority	Status	URL
+1	Sales	Days target vs Actual	"Wtd target vs actual,MoM evolution"	monthly target vs actual		"BM,RM,HOR,Management"	1	Complete	Link to the Report
+		Daily sales comparison DoD	"WoW product comparison,MoM product evolution"	MoM comparison storewise			1	Complete	Link to the Report
+		Daily Category sales target vs actual	"WoW category evolution, MoM category evolution"	MoM category comparison			1	Complete	Link to the Report
+		Sales by salesperson vs target	Weekly	Monthly			1	Complete	Link to the Report
+		Sales per supplier 	Weekly	Monthly			1	Complete	Link to the Report
+		Sales by brand and GP					1	Complete	Link to the Report
+		Sales by Shift & contribution	"WoW shift evolution,MoM shift evolution"	MoM product comparison			1	Complete	Link to the Report
+		Sales by pharmtechs category target vs actual	"WoW pharmtechs sales evolution,MoM Pharmtech sales evo"	MoM Pharmtechs sales perf			1	Complete	Link to the Report
+2		"Channel sales - ecomm, KPA, KPC, Glovo, Uber-eats, Whatsapp"					1	Complete	Link to the Report
+3		Sales for 24hours branches					2	Complete	Link to the Report
+		Hourly sales by Branch					2	Complete	Link to the Report
+		"Sales by branch classification - Tier 1, T2, T3,T4"	wow	mom			2	Complete	Link to the Report
+		Regional sales	wow	mom			2	Complete	Link to the Report
+		Regional sales vs target	wow	mom			2	Complete	Link to the Report
+4		"Product mix per individual, per branch, per region, companywide"	WoW	MoM	Syrup at 1000		2	Complete	Link to the Report
+		Sales vs Holding	wow	mom			2	Complete	Link to the Report
+5		Sales by high value items			Tablet at 50		3	Complete	Link to the Report
+6		Cross selling report	WoW	MoM			3	Complete	Link to the Report
+7		Newly listed items performance					2	Complete	Link to the Report
+8		Regional pricing					2	Complete	Link to the Report
+9		"Most improved employee per category, profit and sales"					3	Complete	Link to the Report
+		"Most dropped employee per category, profit and sales"					3	Complete	Link to the Report
+		"Top and bottom employee 10 in sales, profitability per category"					3	Complete	Link to the Report
+10		"Top and bottom branches 10 in sales, profitability per category"					3	Complete	Link to the Report
+11	Performance perks	"Bonus trends by Individual, Branch, Region and Company"	WoW	MoM			2	Complete	Link to the Report
+		"Bonus by brand, category"	WoW	MoM			2	Complete	Link to the Report
+13	Profitability	Branch profitability report-GP	WoW Gp evolution	Monthly gp evolution		"BM,RM,HOR"	1	Complete	Link to the Report
+14	(must be compared to sales)	Daily sku GP	WoW sku GP evolution	MoM sku GP evolution			1	Complete	Link to the Report
+		"Daily category, brand,supplier GP"	"WoW category,brand,supplier GP evolution"	"MoM category,brand,supplier GP evolution"			1	Complete	Link to the Report
+		"Regional profitability(vs target, vs actual)"	WoW	MoM			1	Complete	Link to the Report
+		"Sales vs Transfer -From HQ, IBT"	WoW	MoM			1	Complete	Link to the Report
+		Molecules and  SKU sales and Mark-up analysis	WoW	MoM			1	Complete	Link to the Report
+		"Contribution per SKU by subcategory 1,2,3"	WoW	MoM			1	Complete	Link to the Report
+14	Inventory	"Top selling SKUs -branch, Region, Company"	WoW	MoM		"BM,RM,HOR"	1	Complete	Link to the Report
+		Top selling SKUs -by category 	WoW	MoM			1	Complete	Link to the Report
+		Top selling SKUs - per Supplier	WoW	MoM			1	Complete	Link to the Report
+		Most profitable SKU - Markup	WoW	MoM			1	Complete	Link to the Report
+15		Dead stock report(aging)	"Weekly deadstock evolution by sku, brand,supplier"	"Monthly deadstock evolution by sku, branch,brand,supplier"			1	Complete	Link to the Report
+		Stock Holding skuwise(per warehouse)	Weekly SOH evolution	Monthly branch SOH vs mothly sales			1	Complete	Link to the Report
+		Slow moving report(aging)	Weekly Slow moving report(aging)	Monthly shrinkage report			1	Complete	Link to the Report
+		Short expiry products/alerts					1	Complete	Link to the Report
+		Store to distribute deadstocks	Store to distribute deadstocks				1	Complete	Link to the Report
+16		Store to distribute Excess stocks	Store to distribute Excess stocks				1	Complete	Link to the Report
+		Items available in Branch A but Missing in B	Items available in Branch A but Missing in B				1	Complete	Link to the Report
+		Items selling in Branch A but Not in B	Items selling in Branch A but Not in B				1	Complete	Link to the Report
+		Items available in HQ but Missing in branch					1	Complete	Link to the Report
+		Excess stocks per branch - above Max(value and volume)					1	Complete	Link to the Report
+		Availability report	Weekly availability evolution				1	Complete	Link to the Report
+17		Daily variance reports					2	Complete	Link to the Report
+		Minimax adjustment report 	WoW	MoM			2	Complete	Link to the Report
+		"Shrinkage report - by branch, region, companywide"					2	Complete	Link to the Report
+18		"Import vs local molecules markup, sales and cost"					3	Open	Link to the Report
+		Availability per molecule per branch					3	Open	Link to the Report
+		Product seasonal report					3	Open	Link to the Report
+		"Branch,HQ minimum and maximum stocks - Quantity and Value"					3	Open	Link to the Report
+		Supplier minimum and maximum stocks - Quantity and Value					3	Open	Link to the Report
+		New branch stocking analytics					3	Open	Link to the Report
+		"Maximum vs Holding per SKU - Supplier, Warehouse,companywide"					3	Open	Link to the Report
+19	Customer	Days target vs Actual - Footfall	Weekly customer no evolution	Monthly target vs actual		"BM,RM,HOR"	2	Open	Link to the Report
+				Monthly CN evolution/trends			2	Open	Link to the Report
+20	Bill Value	Days target vs Actual	Weekly customer no evolution	Monthly target vs actual		"BM,RM,HOR"	3	Open	Link to the Report
+				Monthly BV evolution/trends			3	Open	Link to the Report
+21	Loyalty	Daily registrations target vs actual	"Weekly registrations target vs actual, WoW comparison"	Monthly  registrations target vs actual			3	Open	Link to the Report
+		Daily redemptions	Weekly redemptions	Monthly redemptions			3	Open	Link to the Report
+		"Daily registrations by gender,profession"	"Weekly registrations by gender,profession"	MoM registrations comparison			3	Open	Link to the Report
+22	Promo	Daily promo cont to sales	Weekly promo cont to sales	Monthly promo cont to sales		"BM,RM,HOR"	2	Open	Link to the Report
+		Daily promo cont to category sales	Weekly promo cont to category sales	MoM promo evolution			2	Open	Link to the Report
+			Sku cont to sales	Monthly sku promo to sales			2	Open	Link to the Report
+23	"SAP,Ecommerce"	Customer Profile	Customer demographics and behaviour	"gender, age,avg purchases, per branch,returns,cancellations,void transactions"	"weekly,monthly"	Management	2	Open	Link to the Report
+24	SAP	Activation Tracker	"How promos, Billboards are affecting sales"	"sales per branch after promo,Gm, unit per transaction"	"Periods,weekly,monthly"	Retail	3	Open	Link to the Report
+25	SAP	Slow Movers & fast movers	Track slow moving stock in inventory and where its fast moving	"Location, ageing days,volume etc"	"weekly,monthly"	Retail	3	Open	Link to the Report
+26	SAP/Website	Sales Vs target Vs Same Period LY	Track sales performance in Ecommerce	"sales Per month, per week, by category/subcategory, by customer"	"Weekly, Monthly"	E-commerce	3	Open	Link to the Report
+	Total								
