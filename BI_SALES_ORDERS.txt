@@ -1,0 +1,25 @@
+BI_SALES_ORDERS
+
+CREATE VIEW "PPL_LIVE"."BI_SALES_ORDERS" ( "DocNum",
+	 "DocDate",
+	 "CardCode",
+	 "Quotation No",
+	 "ItemCode",
+	 "Quantity",
+	 "Price",
+	 "LineTotal",
+	 "LineStatus",
+	 "Order Status" ) AS SELECT
+	 T0."DocNum",
+	 T0."DocDate",
+	 T0."CardCode",
+	 T1."BaseRef" "Quotation No",
+	 T1."ItemCode",
+	 T1."Quantity",
+	 T1."Price",
+	 T1."LineTotal",
+	 T1."LineStatus",
+	 T0."DocStatus" "Order Status" 
+FROM ORDR T0 
+INNER JOIN RDR1 T1 ON T0."DocEntry" = T1."DocEntry" 
+ORDER BY T0."DocNum" WITH READ ONLY

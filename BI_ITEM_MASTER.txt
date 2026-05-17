@@ -1,0 +1,64 @@
+BI_ITEM_MASTER
+
+CREATE VIEW "PPL_LIVE"."BI_ITEM_MASTER" ( "ItemCode",
+	 "ItemName",
+	 "FrgnName",
+	 "UgpEntry",
+	 "UomCode",
+	 "ItmsGrpNam",
+	 "U_SubCat1",
+	 "CardCode",
+	 "CreateDate",
+	 "Active/InActive",
+	 "U_SubCat2",
+	 "U_SubCat3",
+	 "U_Brand",
+	 "U_Formulation",
+	 "U_ LongTermProducts",
+	 "U_GlovoProduct",
+	 "U_BOY_TB_0",
+	 "U_Essentials",
+	 "U_EssentialsBDM",
+	 "U_ActiveIngredient",
+	 "U_ControlledProducts",
+	 "U_PurchaseCat",
+	 "Wholesale Price",
+	 "Pos Price",
+	 "CodeBars" ) AS SELECT
+	 T0."ItemCode",
+	 T0."ItemName",
+	 T0."FrgnName",
+	 T0."UgpEntry",
+	 T8."UomCode",
+	 T1."ItmsGrpNam",
+	 T0."U_SubCat1",
+	 T2."CardCode",
+	 T0."CreateDate",
+	 T0."validFor" "Active/InActive",
+	 T0."U_SubCat2",
+	 T0."U_SubCat3",
+	 T0."U_Brand",
+	 T0."U_Formulation" ,
+	 T0."U_ LongTermProducts",
+	 T0."U_GlovoProduct",
+	 T0."U_BOY_TB_0",
+	 T0."U_Essentials",
+	 T0."U_EssentialsBDM",
+	 T0."U_ActiveIngredient",
+	 T0."U_ControlledProducts",
+	 T0."U_PurchaseCat"
+	 (select
+	 S."Price" 
+	from ITM1 S 
+	where T0."ItemCode"=S."ItemCode" 
+	and S."PriceList"='2')"Wholesale Price",
+	 (select
+	 S."Price" 
+	from ITM1 S 
+	where T0."ItemCode"=S."ItemCode" 
+	and S."PriceList"='1') "Pos Price",
+	 T0."CodeBars" 
+FROM OITM T0 
+INNER JOIN OITB T1 ON T0."ItmsGrpCod" = T1."ItmsGrpCod" 
+LEFT JOIN OCRD T2 ON T0."CardCode" = T2."CardCode" 
+LEFT JOIN OUOM T8 ON T0."IUoMEntry"= T8."UomEntry" WITH READ ONLY

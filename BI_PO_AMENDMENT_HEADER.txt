@@ -1,0 +1,30 @@
+BI_PO_AMENDMENT_HEADER
+
+CREATE VIEW "PPL_LIVE"."BI_PO_AMENDMENT_HEADER" ( "MAX(LogInstanc)",
+	 "DocEntry",
+	 "DocNum",
+	 "DocDate",
+	 "CardCode",
+	 "CardName",
+	 "DocTotal",
+	 "NumAtCard" ) AS select
+	 max(T0."LogInstanc"),
+	 T1."DocEntry",
+	 T1."DocNum",
+	 T1."DocDate",
+	 T1."CardCode",
+	 T1."CardName",
+	 T1."DocTotal",
+	 T1."NumAtCard" 
+from ADOC T0 
+INNER JOIN OPOR T1 ON T0."DocEntry"=T1."DocEntry" 
+where T0."ObjType"='22' 
+GROUP BY T1."DocEntry",
+	 T1."DocNum",
+	 T1."DocDate",
+	 T1."CardCode",
+	 T1."CardName",
+	 T1."DocTotal",
+	 T1."NumAtCard" 
+order by T1."DocNum",
+	 T1."DocDate" WITH READ ONLY

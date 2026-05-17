@@ -1,0 +1,14 @@
+BI_CURRENT_INVENTORY_FINAL
+
+CREATE VIEW "PPL_LIVE"."BI_CURRENT_INVENTORY_FINAL" ( "Warehouse",
+	 "ItemCode",
+	 "SUM(InQty-OutQty)",
+	 "Stock Value" ) AS SELECT
+	 T0."Warehouse",
+	 T0."ItemCode",
+	 sum(T0."InQty"-T0."OutQty"),
+	 sum(T0."TransValue") "Stock Value" 
+FROM OINM T0 
+GROUP BY T0."Warehouse",
+	 T0."ItemCode" HAVING sum(T0."InQty"-T0."OutQty")<>0 
+and sum(T0."TransValue") <>'0' WITH READ ONLY

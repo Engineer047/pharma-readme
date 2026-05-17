@@ -1,0 +1,85 @@
+BI_SALES_TRANSACTION
+
+CREATE VIEW "PPL_LIVE"."BI_SALES_TRANSACTION" ( "DocNum",
+	 "ItemCode",
+	 "ItmsGrpNam",
+	 "Project",
+	 "WhsCode",
+	 "CardCode",
+	 "DocDate",
+	 "Price list",
+	 "UOM (Sales)",
+	 "QTY Sales UOM",
+	 "Line Total (Before Discount)",
+	 "Discount %",
+	 "Invoice Discount %",
+	 "GrssProfit",
+	 "Payterm",
+	 "Ref Invoice No",
+	 "DocDueDate",
+	 "Base Qty",
+	 "Base UoM",
+	 "SlpName" ) AS ((SELECT
+	 T0."DocNum",
+	 T1."ItemCode",
+	 T3."ItmsGrpNam",
+	 T1."Project",
+	 T1."WhsCode",
+	 T0."CardCode",
+	 T0."DocDate",
+	 T5."ListName" "Price list",
+	 T1."UomCode" "UOM (Sales)",
+	 T1."Quantity" "QTY Sales UOM",
+	 (T1."Quantity"*T1."PriceBefDi") "Line Total (Before Discount)",
+	 T1."DiscPrcnt" "Discount %",
+	 T0."DiscPrcnt" "Invoice Discount %",
+	 T1."GrssProfit",
+	 Case when T0."GroupNum"='-1' 
+		then 'Cash' 
+		else 'Credit' 
+		end "Payterm",
+	 '' "Ref Invoice No",
+	 T0."DocDueDate",
+	 T1."InvQty" "Base Qty",
+	 T1."unitMsr2" "Base UoM",
+	 T6."SlpName" 
+		FROM OINV T0 
+		INNER JOIN INV1 T1 ON T0."DocEntry" = T1."DocEntry" 
+		INNER JOIN OITM T2 ON T1."ItemCode" = T2."ItemCode" 
+		INNER JOIN OITB T3 ON T2."ItmsGrpCod" = T3."ItmsGrpCod" 
+		INNER JOIN OCRD T4 ON T4."CardCode"=T0."CardCode" 
+		left JOIN OPLN T5 ON T4."ListNum" = T5."ListNum" 
+		LEFT JOIN OSLP T6 ON T0."SlpCode"=T6."SlpCode" 
+		WHERE T0."CANCELED"='N') 
+	UNION ALL (SELECT
+	 T0."DocNum",
+	 T1."ItemCode",
+	 T3."ItmsGrpNam",
+	 T1."Project",
+	 T1."WhsCode",
+	 T0."CardCode",
+	 T0."DocDate",
+	 T5."ListName" "Price list",
+	 T1."UomCode" "UOM (Sales)",
+	 -1*(T1."Quantity") "QTY Sales UOM",
+	 -1*(T1."Quantity"*T1."PriceBefDi") "Line Total (Before Discount)",
+	 T1."DiscPrcnt" "Discount %",
+	 T0."DiscPrcnt" "Invoice Discount %",
+	 T1."GrssProfit",
+	 Case when T0."GroupNum"='-1' 
+		then 'Cash' 
+		else 'Credit' 
+		end "Payterm",
+	 T1."BaseRef" "Ref Invoice No",
+	 T0."DocDueDate",
+	 T1."InvQty" "Base Qty",
+	 T1."unitMsr2" "Base UoM",
+	 T6."SlpName" 
+		FROM ORIN T0 
+		INNER JOIN RIN1 T1 ON T0."DocEntry" = T1."DocEntry" 
+		INNER JOIN OITM T2 ON T1."ItemCode" = T2."ItemCode" 
+		INNER JOIN OITB T3 ON T2."ItmsGrpCod" = T3."ItmsGrpCod" 
+		INNER JOIN OCRD T4 ON T4."CardCode"=T0."CardCode" 
+		LEFT JOIN OPLN T5 ON T4."ListNum" = T5."ListNum" 
+		LEFT JOIN OSLP T6 ON T0."SlpCode"=T6."SlpCode" 
+		WHERE T0."CANCELED"='N')) WITH READ ONLY

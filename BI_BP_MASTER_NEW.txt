@@ -1,0 +1,60 @@
+BI_BP_MASTER_NEW
+
+CREATE VIEW "PPL_LIVE"."BI_BP_MASTER_NEW" ( "CardCode",
+	 "CardName",
+	 "Foreign Name",
+	 "GroupName",
+	 "CardType",
+	 "Phone1",
+	 "Phone2",
+	 "CntctPrsn",
+	 "Payterm",
+	 "CreditLine",
+	 "LicTradNum",
+	 "ListName",
+	 "SlpName",
+	 "Currency",
+	 "Cellular",
+	 "City",
+	 "County",
+	 "Country",
+	 "E_Mail",
+	 "Category",
+	 "Territory",
+	 "CreateDate" ) AS SELECT
+	 T0."CardCode",
+	 T0."CardName",
+	 T0."CardFName" "Foreign Name",
+	 T5."GroupName",
+	 T0."CardType",
+	 T0."Phone1",
+	 T0."Phone2",
+	 T0."CntctPrsn",
+	 T4."PymntGroup" "Payterm",
+	 T0."CreditLine",
+	 T0."LicTradNum",
+	 T2."ListName",
+	 T1."SlpName",
+	 T0."Currency",
+	 T0."Cellular",
+	 T0."City",
+	 T0."County",
+	 T0."Country",
+	 T0."E_Mail",
+	 CASE WHEN T0."QryGroup1"='Y' 
+THEN 'STOCK SUPPLIERS' WHEN T0."QryGroup2"='Y' 
+THEN 'SERVICE SUPPLIERS' WHEN T0."QryGroup3"='Y' 
+THEN 'CASH CUSTOMER' WHEN T0."QryGroup4"='Y' 
+THEN 'CREDIT CUSTOMER' WHEN T0."QryGroup5"='Y' 
+THEN 'PARTNERSHIPS' WHEN T0."QryGroup6"='Y' 
+END "Groups"
+	 T3."descript" "Territory",
+	 T0."CreateDate" 
+FROM OCRD T0 
+LEFT JOIN OSLP T1 ON T0."SlpCode" = T1."SlpCode" 
+LEFT JOIN OPLN T2 ON T0."ListNum" = T2."ListNum" 
+LEFT JOIN OTER T3 ON T0."Territory" = T3."territryID" 
+LEFT JOIN OCTG T4 ON T0."GroupNum" = T4."GroupNum" 
+LEFT JOIN OCRG T5 ON T0."GroupCode" = T5."GroupCode" 
+ORDER BY T0."CardType",
+	 T0."CardCode" WITH READ ONLY

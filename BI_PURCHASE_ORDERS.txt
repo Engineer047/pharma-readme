@@ -1,0 +1,50 @@
+BI_PURCHASE_ORDERS
+
+CREATE VIEW "PPL_LIVE"."BI_PURCHASE_ORDERS" ( "DocEntry",
+	 "DocType",
+	 "DocNum",
+	 "DocDate",
+	 "CardCode",
+	 "ItemCode",
+	 "Purchase UoM",
+	 "Quantity",
+	 "DocDueDate",
+	 "PO STATUS",
+	 "DocCur",
+	 "Line Total",
+	 "Tax Amount",
+	 "DiscPrcnt",
+	 "Base Qty",
+	 "Base UoM",
+	 "PO CREATED BY" ) AS SELECT
+	 T0."DocEntry",
+	 T0."DocType",
+	 T0."DocNum",
+	 T0."DocDate",
+	 T0."CardCode",
+	 T3."ItemCode",
+	 T3."unitMsr" "Purchase UoM",
+	 T3."Quantity",
+	 T0."DocDueDate",
+	 (Case when T0."DocStatus"='O' 
+	THEN 'OPEN' WHEN T0."DocStatus"='C' 
+	THEN 'CLOSE' 
+	ELSE T0."DocStatus" 
+	END) "PO STATUS",
+	 T0."DocCur",
+	 (CASE WHEN T0."DocCur"='KES' 
+	THEN T3."LineTotal" 
+	ELSE T3."TotalFrgn" 
+	END) "Line Total",
+	 (CASE WHEN T0."DocCur"='KES' 
+	THEN T3."VatSum" 
+	ELSE T3."VatSumFrgn" 
+	END) "Tax Amount",
+	 T3."DiscPrcnt",
+	 T3."InvQty" "Base Qty",
+	 T3."unitMsr2" "Base UoM",
+	 T1."U_NAME" "PO CREATED BY" 
+FROM OPOR T0 
+INNER JOIN POR1 T3 ON T0."DocEntry"=T3."DocEntry" 
+INNER JOIN OUSR T1 ON T1."USERID"=T0."UserSign" 
+AND T0."CANCELED"='N' WITH READ ONLY

@@ -1,0 +1,46 @@
+BI_STOCK_ADJUSTMENT
+
+CREATE VIEW "PPL_LIVE"."BI_STOCK_ADJUSTMENT" ( "ObjType",
+	 "DocNum",
+	 "DocDate",
+	 "ItemCode",
+	 "Dscription",
+	 "Quantity",
+	 "Price",
+	 "WhsCode" ) AS (((select
+	 T0."ObjType",
+	 T0."DocNum",
+	 T0."DocDate",
+	 T1."ItemCode",
+	 T1."Dscription",
+	 T1."Quantity",
+	 T1."INMPrice" "Price",
+	 T1."WhsCode" 
+			from OIGN T0 
+			INNER JOIN IGN1 T1 ON T0."DocEntry"=T1."DocEntry" 
+			where T0."CANCELED"='N' 
+			and T1."BaseRef" is null) 
+		UNION ALL (select
+	 T0."ObjType",
+	 T0."DocNum",
+	 T0."DocDate",
+	 T1."ItemCode",
+	 T1."Dscription",
+	 -T1."Quantity",
+	 T1."INMPrice" "Price",
+	 T1."WhsCode" 
+			from OIGE T0 
+			INNER JOIN IGE1 T1 ON T0."DocEntry"=T1."DocEntry" 
+			where T0."CANCELED"='N' 
+			and T1."BaseRef" is null)) 
+	UNION ALL (select
+	 T0."ObjType",
+	 T0."DocNum",
+	 T0."DocDate",
+	 T1."ItemCode",
+	 T1."ItemName",
+	 T1."Quantity",
+	 T1."Price",
+	 T1."WhsCode" 
+		from OIQR T0 
+		INNER JOIN IQR1 T1 ON T0."DocEntry"=T1."DocEntry")) WITH READ ONLY

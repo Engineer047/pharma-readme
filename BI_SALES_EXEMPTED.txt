@@ -1,0 +1,31 @@
+BI_SALES_EXEMPTED
+
+CREATE VIEW "PPL_LIVE"."BI_SALES_EXEMPTED" ( "DocNum",
+	 "DocDate",
+	 "CardCode",
+	 "CardName",
+	 "ItemCode",
+	 "Dscription",
+	 "Quantity",
+	 "Price",
+	 "LineTotal",
+	 "VatGourpSa",
+	 "VatStatus" ) AS select
+	 T0."DocNum",
+	T0."DocDate",
+	T0."CardCode",
+	T0."CardName",
+	T1."ItemCode",
+	T1."Dscription",
+	 T1."Quantity",
+	T1."Price",
+	T1."LineTotal",
+	T2."VatGourpSa",
+	T3."VatStatus" 
+from OINV T0 
+INNER JOIN INV1 T1 ON T0."DocEntry"=T1."DocEntry" 
+INNER JOIN OITM T2 ON T1."ItemCode"=T2."ItemCode" 
+INNER JOIN OCRD T3 ON T0."CardCode"=T3."CardCode" 
+where T1."VatGroup" not in ('O1',
+	'O3') 
+and T1."ItemCode" not like 'P%' WITH READ ONLY

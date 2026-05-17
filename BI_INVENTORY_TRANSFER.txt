@@ -1,0 +1,38 @@
+BI_INVENTORY_TRANSFER
+
+CREATE VIEW "PPL_LIVE"."BI_INVENTORY_TRANSFER" ( "Transfer No",
+	 "Transfer Date",
+	 "Request No",
+	 "Requested Date",
+	 "ItemCode",
+	 "FromWhsCod",
+	 "To Warehouse",
+	 "Transfer Qty",
+	 "Request Qty" ) AS ((SELECT
+	 top 500 T0."DocNum" "Transfer No",
+	 T0."DocDate" "Transfer Date",
+	T3."DocNum" "Request No",
+	T3."DocDate" "Requested Date",
+	 T1."ItemCode",
+	 T1."FromWhsCod",
+	T1."WhsCode" "To Warehouse",
+	 T1."InvQty" "Transfer Qty",
+	T2."InvQty" "Request Qty" 
+		FROM OWTR T0 
+		INNER JOIN WTR1 T1 ON T0."DocEntry" = T1."DocEntry" 
+		INNER JOIN WTQ1 T2 ON T1."BaseEntry"=T2."DocEntry" 
+		AND T1."BaseLine"=T2."LineNum" 
+		INNER JOIN OWTQ T3 ON T2."DocEntry"=T3."DocEntry") 
+	UNION ALL (SELECT
+	 top 500 T0."DocNum" "Transfer No",
+	 T0."DocDate" "Transfer Date",
+	'0' "Request No",
+	'' "Requested Date",
+	 T1."ItemCode",
+	 T1."FromWhsCod",
+	T1."WhsCode" "To Warehouse",
+	 T1."InvQty" "Transfer Qty",
+	'0' "Request Qty" 
+		FROM OWTR T0 
+		INNER JOIN WTR1 T1 ON T0."DocEntry" = T1."DocEntry" 
+		AND T1."BaseType"='-1')) WITH READ ONLY

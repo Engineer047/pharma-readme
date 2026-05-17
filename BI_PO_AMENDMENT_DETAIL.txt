@@ -1,0 +1,21 @@
+BI_PO_AMENDMENT_DETAIL
+
+CREATE VIEW "PPL_LIVE"."BI_PO_AMENDMENT_DETAIL" ( "LogInstanc",
+	 "DocEntry",
+	 "LineNum",
+	 "ItemCode",
+	 "Dscription",
+	 "Quantity",
+	 "Price",
+	 "Currency" ) AS select
+	 T0."LogInstanc",
+	T0."DocEntry",
+	T0."LineNum",
+	T0."ItemCode",
+	T0."Dscription",
+	T0."Quantity",
+	T0."Price",
+	T0."Currency" 
+from ADO1 T0 
+where "ObjType"='22' 
+ORDER BY "ItemCode"

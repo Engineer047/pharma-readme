@@ -1,0 +1,22 @@
+BI_CUSTOMER_OUTSTANDING
+
+CREATE VIEW "PPL_LIVE"."BI_CUSTOMER_OUTSTANDING" ( "Customer Code",
+	 "TransType",
+	 "DocNum",
+	 "Doc Date",
+	 "Due Date",
+	 "Balance" ) AS select
+	 T1."ShortName" "Customer Code",
+	T1."TransType",
+	T0."BaseRef" "DocNum",
+	 TO_VARCHAR(T1."RefDate",
+	'YYYY-MM-DD') "Doc Date",
+	 TO_VARCHAR(T1."DueDate",
+	'YYYY-MM-DD') "Due Date",
+	 (T1."BalDueDeb"-T1."BalDueCred")"Balance" 
+FROM OJDT T0 
+INNER JOIN JDT1 T1 ON T0."TransId" = T1."TransId" 
+INNER JOIN OCRD T2 ON T1."ShortName" = T2."CardCode" 
+AND T2."CardType"='C' 
+where (T1."BalDueDeb"<>0 
+	or T1."BalDueCred"<>0) WITH READ ONLY

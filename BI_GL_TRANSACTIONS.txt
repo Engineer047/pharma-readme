@@ -1,0 +1,17 @@
+BI_GL_TRANSACTIONS
+
+CREATE VIEW "PPL_LIVE"."BI_GL_TRANSACTIONS" ( "TransId",
+	 "ProfitCode",
+	 "OcrCode2",
+	 "RefDate",
+	 "Account",
+	 "Debit",
+	 "Credit" ) AS select
+	 T0."TransId",
+	 T0."ProfitCode",
+	 T0."OcrCode2",
+	 T0."RefDate",
+	 T0."Account",
+	 T0."Debit",
+	 T0."Credit" 
+from JDT1 T0

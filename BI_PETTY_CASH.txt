@@ -1,0 +1,26 @@
+BI_PETTY_CASH
+
+CREATE VIEW "PPL_LIVE"."BI_PETTY_CASH" ( "TransId",
+	 "RefDate",
+	 "Account",
+	 "Debit",
+	 "Credit",
+	 "Project",
+	 "ProfitCode",
+	 "OcrCode2",
+	 "LineMemo" ) AS select
+	 T0."TransId",
+	T0."RefDate",
+	T0."Account",
+	T0."Debit",
+	T0."Credit",
+	T0."Project",
+	T0."ProfitCode",
+	T0."OcrCode2",
+	T0."LineMemo" 
+from JDT1 T0 
+where t0."ContraAct" in (select
+	 T."Account" 
+	from JDT1 T 
+	inner join OACT T1 on T."Account"=T1."AcctCode" 
+	where T1."FatherNum" IN('102440000','102450000','102460000')

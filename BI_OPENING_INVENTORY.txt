@@ -1,0 +1,29 @@
+BI_OPENING_INVENTORY
+
+CREATE VIEW "PPL_LIVE"."BI_OPENING_INVENTORY" ( "ItemCode",
+	 "Warehouse",
+	 "DocNum",
+	 "TransType",
+	 "DocDate",
+	 "InQty",
+	 "OutQty",
+	 "TransValue",
+	 "CREATED BY" ) AS SELECT
+	 T0."ItemCode",
+	 T0."Warehouse",
+	 'OpeningBal' "DocNum",
+	 '00' "TransType",
+	 ADD_YEARS (CAST(CONCAT(YEAR(CURRENT_TIMESTAMP),
+	'0630') AS DATE),
+	 -3) "DocDate",
+	 SUM(T0."InQty") "InQty",
+	 SUM(T0."OutQty") "OutQty",
+	 SUM(T0."TransValue") "TransValue",
+	 'Admin' "CREATED BY" 
+FROM OINM T0 
+INNER JOIN OUSR T1 ON T1."USERID"=T0."UserSign" 
+WHERE T0."DocDate" <= ADD_YEARS (CAST(CONCAT(YEAR(CURRENT_TIMESTAMP),
+	'0630') AS DATE),
+	 -3) 
+GROUP BY T0."ItemCode",
+	T0."Warehouse" WITH READ ONLY

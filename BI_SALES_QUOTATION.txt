@@ -1,0 +1,26 @@
+BI_SALES_QUOTATION
+
+CREATE VIEW "PPL_LIVE"."BI_SALES_QUOTATION" ( "Quotation No",
+	 "Quotation Date",
+	 "Quotation Due Date",
+	 "Customer Code",
+	 "ItemCode",
+	 "Quantity",
+	 "Price",
+	 "LineTotal",
+	 "LineStatus",
+	 "Order Status",
+	 "Quotation Type" ) AS SELECT
+	 T0."DocNum" "Quotation No",
+	 T0."DocDate" "Quotation Date",
+	T0."DocDueDate" "Quotation Due Date",
+	 T0."CardCode" "Customer Code",
+	 T1."ItemCode",
+	 T1."Quantity",
+	 T1."Price",
+	 T1."LineTotal",
+	 T1."LineStatus",
+	T0."DocStatus" "Order Status",
+	FROM OQUT T0 
+INNER JOIN QUT1 T1 ON T0."DocEntry" = T1."DocEntry" 
+ORDER BY T0."DocNum" WITH READ ONLY

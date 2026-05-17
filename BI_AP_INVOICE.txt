@@ -1,0 +1,84 @@
+BI_AP_INVOICE
+
+CREATE VIEW "PPL_LIVE"."BI_AP_INVOICE" ( "Invoice No",
+	 "Invoice Date",
+	 "Supplier Invoice No",
+	 "CardCode",
+	 "DocCur",
+	 "GRN No",
+	 "PO No",
+	 "ItemCode",
+	 "Invoice Qty",
+	 "Invoice Price",
+	 "Invoice Line Total",
+	 "Invoice Tax Amount",
+	 "GRN Qty",
+	 "GRN Price",
+	 "GRN Line Total",
+	 "GRN Tax Amount" ) AS ((select
+	 T0."DocNum" "Invoice No",
+	T0."DocDate" "Invoice Date",
+	T0."NumAtCard" "Supplier Invoice No",
+	T0."CardCode",
+	T0."DocCur",
+	 T3."DocNum" "GRN No",
+	T5."DocNum" "PO No",
+	T1."ItemCode",
+	T1."Quantity" "Invoice Qty",
+	T1."Price" "Invoice Price",
+	 CASE WHEN T0."DocCur"='KES' 
+		then T1."LineTotal" 
+		ELSE T1."TotalFrgn" 
+		end "Invoice Line Total",
+	 CASE WHEN T0."DocCur"='KES' 
+		then T1."VatSum" 
+		ELSE T1."VatSumFrgn" 
+		END "Invoice Tax Amount",
+	 T2."Quantity" "GRN Qty",
+	T2."Price" "GRN Price",
+	 CASE WHEN T0."DocCur"='KES' 
+		then T2."LineTotal" 
+		ELSE T2."TotalFrgn" 
+		end "GRN Line Total",
+	 CASE WHEN T0."DocCur"='KES' 
+		then T2."VatSum" 
+		ELSE T2."VatSumFrgn" 
+		END "GRN Tax Amount" 
+		from OPCH T0 
+		INNER JOIN PCH1 T1 ON T0."DocEntry"=T1."DocEntry" 
+		and T0."DocType"='I' 
+		INNER JOIN PDN1 T2 ON T1."BaseEntry"=T2."DocEntry" 
+		and T1."BaseLine"=T2."LineNum" 
+		INNER JOIN OPDN T3 ON T2."DocEntry"=T3."DocEntry" 
+		LEFT JOIN POR1 T4 ON T4."DocEntry"=T2."BaseEntry" 
+		and T2."BaseLine"=T4."LineNum" 
+		LEFT JOIN OPOR T5 ON T5."DocEntry"=T4."DocEntry") 
+	UNION ALL (select
+	 T0."DocNum" "Invoice No",
+	T0."DocDate" "Invoice Date",
+	T0."NumAtCard" "Supplier Invoice No",
+	T0."CardCode",
+	T0."DocCur",
+	 '0' "GRN No",
+	'0' "PO No",
+	T1."ItemCode",
+	T1."Quantity" "Invoice Qty",
+	T1."Price" "Invoice Price",
+	 CASE WHEN T0."DocCur"='KES' 
+		then T1."LineTotal" 
+		ELSE T1."TotalFrgn" 
+		end "Invoice Line Total",
+	 CASE WHEN T0."DocCur"='KES' 
+		then T1."VatSum" 
+		ELSE T1."VatSumFrgn" 
+		END "Invoice Tax Amount",
+	 '0' "GRN Qty",
+	'0' "GRN Price",
+	 '0' "GRN Line Total",
+	 '0' "GRN Tax Amount" 
+		from OPCH T0 
+		INNER JOIN PCH1 T1 ON T0."DocEntry"=T1."DocEntry" 
+		and T0."DocType"='I' 
+		AND T1."BaseType"='-1') 
+	order by "Invoice No",
+	"Invoice Date") WITH READ ONLY

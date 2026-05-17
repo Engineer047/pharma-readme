@@ -1,0 +1,14 @@
+BI_WAREHOUSE_MASTER
+
+CREATE VIEW "PPL_LIVE"."BI_WAREHOUSE_MASTER" ( "WhsCode",
+	 "WhsName",
+	 "Location",
+	 "Intransit Warehouse" ) AS select
+	 T0."WhsCode",
+	T0."WhsName",
+	T1."Location",
+	T0."U_CXS_ISID" "Intransit Warehouse" 
+from OWHS T0 
+LEFT JOIN OLCT T1 ON T0."Location"=T1."Code" 
+order by T0."Location",
+	T0."WhsCode" WITH READ ONLY

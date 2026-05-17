@@ -1,0 +1,23 @@
+BI_INVENTORY_TRANSACTIONS_CURRENT
+
+CREATE VIEW "PPL_LIVE"."BI_INVENTORY_TRANSACTIONS_CURRENT" ( "ItemCode",
+	 "Warehouse",
+	 "DocNum",
+	 "TransType",
+	 "DocDate",
+	 "InQty",
+	 "OutQty",
+	 "TransValue",
+	 "CREATED BY" ) AS SELECT
+	 T0."ItemCode",
+	 T0."Warehouse",
+	 T0."BASE_REF" "DocNum",
+	 T0."TransType",
+	 T0."DocDate",
+	 T0."InQty",
+	 T0."OutQty",
+	 T0."TransValue",
+	 T1."U_NAME" "CREATED BY" 
+FROM OINM T0 
+INNER JOIN OUSR T1 ON T1."USERID"=T0."UserSign" 
+WHERE "DocDate" >= '20250401' WITH READ ONLY

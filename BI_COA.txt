@@ -1,0 +1,15 @@
+BI_COA
+
+CREATE VIEW "PPL_LIVE"."BI_COA" ( "AcctCode",
+	 "AcctName",
+	 "CurrTotal",
+	 "FatherNum",
+	 "GroupMask",
+	 "Postable" ) AS SELECT
+	 T0."AcctCode",
+	T0."AcctName",
+	T0."CurrTotal",
+	T0."FatherNum",
+	T0."GroupMask",
+	T0."Postable" 
+FROM OACT T0

@@ -1,0 +1,169 @@
+BI_CASH_CUSTOMER_AGING
+
+CREATE VIEW "PPL_LIVE"."BI_CASH_CUSTOMER_AGING" ( "CardCode",
+	 "CardName",
+	 "PAYTERM",
+	 "SALESREP",
+	 "CREDITTERM",
+	 "DOCNUM",
+	 "CURRENCY",
+	 "POSTINGDATE",
+	 "DOCUMENTDATE",
+	 "LC_BALANCE",
+	 "LC_FUTURE",
+	 "LC_CURRENT",
+	 "LC_31_60_DAYS",
+	 "LC_61_90_DAYS",
+	 "LC_91_120_DAYS",
+	 "LC_120_150_DAYS",
+	 "LC_150_180_DAYS",
+	 "LC_180_DAYS" ) AS SELECT
+	 T1."CardCode",
+	 T1."CardName" ,
+	 T6."PymntGroup" "PAYTERM",
+	 T5."SlpName" "SALESREP",
+	 T1."CreditLine" "CREDITTERM",
+	 T3."DocNum" "DOCNUM",
+	 CASE WHEN T0."FCCurrency" IS NULL 
+THEN 'KES' WHEN T0."FCCurrency" = 'USD' 
+THEN 'USD' -- WHEN T0."FCCurrency" = 'KES' THEN 'KES'
+ WHEN T0."FCCurrency" = 'EUR' 
+THEN 'EUR' WHEN T0."FCCurrency" = 'GBP' 
+THEN 'GBP' WHEN T0."FCCurrency" = 'TZS' 
+THEN 'TZS' 
+END as Currency ,
+	 T0."RefDate" "POSTINGDATE",
+	 T0."TaxDate" "DOCUMENTDATE",
+	 (T0."Debit"-T0."Credit"-COALESCE(T7."ReconSum",
+	 0)) "LC_BALANCE" ,
+	 IFNULL((SELECT
+	 T0."Debit"-T0."Credit" -COALESCE(T7."ReconSum",
+	 0) 
+		FROM DUMMY 
+		WHERE (DAYS_BETWEEN(T0."RefDate" ,
+	 (SELECT
+	 CURRENT_DATE 
+					FROM DUMMY ))<=-1)),
+	 0) "LC_FUTURE" ,
+	 IFNULL((SELECT
+	 T0."Debit"-T0."Credit" -COALESCE(T7."ReconSum",
+	 0) 
+		FROM DUMMY 
+		WHERE (DAYS_BETWEEN(T0."RefDate" ,
+	 (SELECT
+	 CURRENT_DATE 
+					FROM DUMMY))>=0 
+			and (DAYS_BETWEEN(T0."RefDate" ,
+	 (SELECT
+	 CURRENT_DATE 
+						FROM DUMMY))<=30))),
+	 0) "LC_CURRENT" ,
+	 IFNULL((SELECT
+	 T0."Debit"-T0."Credit" -COALESCE(T7."ReconSum",
+	 0) 
+		FROM DUMMY 
+		WHERE (DAYS_BETWEEN(T0."RefDate" ,
+	 (SELECT
+	 CURRENT_DATE 
+					FROM DUMMY))>30 
+			and (DAYS_BETWEEN(T0."RefDate" ,
+	 (SELECT
+	 CURRENT_DATE 
+						FROM DUMMY))<=60))),
+	 0) "LC_31_60_DAYS" ,
+	 IFNULL((SELECT
+	 T0."Debit"-T0."Credit" -COALESCE(T7."ReconSum",
+	 0) 
+		FROM DUMMY 
+		WHERE (DAYS_BETWEEN(T0."RefDate" ,
+	 (SELECT
+	 CURRENT_DATE 
+					FROM DUMMY))>60 
+			and (DAYS_BETWEEN(T0."RefDate" ,
+	 (SELECT
+	 CURRENT_DATE 
+						FROM DUMMY))<=90))),
+	 0) "LC_61_90_DAYS" ,
+	 IFNULL((SELECT
+	 T0."Debit"-T0."Credit" -COALESCE(T7."ReconSum",
+	 0) 
+		FROM DUMMY 
+		WHERE (DAYS_BETWEEN(T0."RefDate" ,
+	 (SELECT
+	 CURRENT_DATE 
+					FROM DUMMY ))>90 
+			and (DAYS_BETWEEN(T0."RefDate" ,
+	 (SELECT
+	 CURRENT_DATE 
+						FROM DUMMY))<=120))),
+	 0) "LC_91_120_DAYS" ,
+	 IFNULL((SELECT
+	 T0."Debit"-T0."Credit" -COALESCE(T7."ReconSum",
+	 0) 
+		FROM DUMMY 
+		WHERE (DAYS_BETWEEN(T0."RefDate" ,
+	 (SELECT
+	 CURRENT_DATE 
+					FROM DUMMY))>120 
+			and (DAYS_BETWEEN(T0."RefDate" ,
+	 (SELECT
+	 CURRENT_DATE 
+						FROM DUMMY))<=150))),
+	 0) "LC_120_150_DAYS" ,
+	 IFNULL((SELECT
+	 T0."Debit"-T0."Credit" -COALESCE(T7."ReconSum",
+	 0) 
+		FROM DUMMY 
+		WHERE (DAYS_BETWEEN(T0."RefDate" ,
+	 (SELECT
+	 CURRENT_DATE 
+					FROM DUMMY))>150 
+			and (DAYS_BETWEEN(T0."RefDate" ,
+	 (SELECT
+	 CURRENT_DATE 
+						FROM DUMMY))<=180))),
+	 0) "LC_150_180_DAYS" ,
+	 IFNULL((SELECT
+	 T0."Debit"-T0."Credit" -COALESCE(T7."ReconSum",
+	 0) 
+		FROM DUMMY 
+		WHERE (DAYS_BETWEEN(T0."RefDate" ,
+	 (SELECT
+	 CURRENT_DATE 
+					FROM DUMMY))>=181)),
+	 0) "LC_180_DAYS" ---------------------------------------------------------------------------------------------------------------------------
+ 
+FROM "PPL_LIVE"."JDT1" T0 
+INNER JOIN "PPL_LIVE"."OCRD" T1 ON T0."ShortName" = T1."CardCode" 
+left join "PPL_LIVE"."OCTG" T6 on T6."GroupNum"=T1."GroupNum" 
+left join "PPL_LIVE"."OSLP" T5 on T5."SlpCode"=T1."SlpCode" 
+LEFT OUTER JOIN "PPL_LIVE"."OINV" T3 ON T0."TransType" = T3."ObjType" 
+AND T0."TransId" = T3."TransId" 
+LEFT OUTER JOIN "PPL_LIVE"."ORIN" T4 ON T0."TransType" = T4."ObjType" 
+AND T0."TransId" = T4."TransId" 
+LEFT JOIN ( SELECT
+	 T4."ShortName",
+	 T4."TransId",
+	 T4."TransRowId",
+	 SUM( T4."ReconSum" * CASE WHEN T4."IsCredit" = 'D' 
+		THEN 1 
+		ELSE -1 
+		END ) AS "ReconSum" 
+	FROM "PPL_LIVE"."OITR" T3 
+	INNER JOIN "PPL_LIVE"."ITR1" T4 ON T3."ReconNum" = T4."ReconNum" 
+	WHERE T3."ReconDate" <= (SELECT
+	 CURRENT_DATE 
+		FROM DUMMY) 
+	GROUP BY T4."ShortName",
+	 T4."TransRowId",
+	 T4."TransId" ) T7 ON T0."TransId" = T7."TransId" 
+AND T7."TransRowId" = T0."Line_ID" 
+AND T0."ShortName" = T7."ShortName" 
+WHERE T0."RefDate" <= (SELECT
+	 CURRENT_DATE 
+	FROM DUMMY) 
+and T0."IntrnMatch" = 0 
+AND T1."CardType" = 'C' 
+AND (T0."Debit"-T0."Credit"-COALESCE(T7."ReconSum",
+	 0)) <> 0 
+ORDER BY T1."CardCode" WITH READ ONLY

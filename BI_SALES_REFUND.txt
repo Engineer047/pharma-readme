@@ -1,0 +1,35 @@
+BI_SALES_REFUND
+
+CREATE VIEW "PPL_LIVE"."BI_SALES_REFUND" ( "DocNum",
+	 "DocDate",
+	 "CardCode",
+	 "CardName",
+	 "DocTotal",
+	 "CashAcct",
+	 "CashSum",
+	 "CreditSum",
+	 "TrsfrAcct",
+	 "TrsfrSum",
+	 "CheckAcct",
+	 "CheckSum",
+	 "Comments",
+	 "JrnlMemo",
+	 "PrjCode" ) AS select
+	 T0."DocNum",
+	 T0."DocDate",
+	 T0."CardCode",
+	 T0."CardName",
+	 t0."DocTotal",
+	 T0."CashAcct",
+	 T0."CashSum",
+	 T0."CreditSum",
+	 T0."TrsfrAcct",
+	 T0."TrsfrSum",
+	 T0."CheckAcct",
+	 T0."CheckSum",
+	 T0."Comments",
+	 T0."JrnlMemo",
+	 T0."PrjCode" 
+from OVPM T0 
+where "DocType"='C' 
+and "CardCode" not like 'CASH%'
